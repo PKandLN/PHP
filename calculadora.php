@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 
@@ -108,3 +107,51 @@ if (isset($_POST["memoria"])) {
 }
 ?>
 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora com Histórico</title>
+    <link rel="stylesheet" href="Css.css">
+</head>
+<body>
+    <h2>Calculadora</h2>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <label for="num1">Número 1:</label>
+        <input type="number" name="num1" value="<?php echo isset($_POST['num1']) ? $_POST['num1'] : '' ?>" required><br><br>
+        <label for="operador">Operador:</label>
+        <select name="operador" required>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="^">^</option>
+            <option value="!">!</option>
+        </select><br><br>
+        <label for="num2">Número 2:</label>
+        <input type="number" name="num2" value="<?php echo isset($_POST['num2']) ? $_POST['num2'] : '' ?>"><br><br>
+        <input type="submit" value="Calcular">
+        
+        <!-- Botões Salvar e Recuperar -->
+        <input type="submit" name="salvar_valores" value="Salvar Valores">
+        <input type="submit" name="recuperar_valores" value="Recuperar Valores">
+
+        <!-- Botão de Memória -->
+        <input type="submit" name="memoria" value="M">
+    </form>
+
+    <h2>Último Resultado</h2>
+    <p><?php echo $ultimoResultado; ?></p>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <input type="submit" name="limpar_hist" value="Limpar Histórico">
+    </form>
+
+    <h2>Histórico de Operações</h2>
+    <ul>
+        <?php foreach ($historico as $operacao) { ?>
+            <li><?php echo $operacao; ?></li>
+        <?php } ?>
+    </ul>
+</body>
+</html>
